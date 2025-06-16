@@ -4,6 +4,9 @@ import numpy as np
 import cv2 
 import io
 
+st.set_page_config(page_title="Photo Resizer", layout="centered")
+
+
 hide_streamlit_cloud_elements = """
     <style>
     #MainMenu {visibility: hidden;}
@@ -16,10 +19,6 @@ hide_streamlit_cloud_elements = """
 """
 st.markdown(hide_streamlit_cloud_elements, unsafe_allow_html=True)
 
-
-
-
-st.set_page_config(page_title="Photo Resizer", layout="centered")
 
 st.title("Photo Resizer App")
 uploaded_image = st.file_uploader("Upload an Image", type=["jpg", "jpeg", "png"])
