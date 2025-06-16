@@ -1,0 +1,5 @@
+io
+opencv-contrib-python
+PIL
+streamllit
+numpy
