@@ -1,4 +1,10 @@
+import streamlit as st
+from PIL import Image  
+import numpy as np
+import cv2 
+import io
 
+# Hide Streamlit Cloud elements
 hide_streamlit_cloud_elements = """
     <style>
     #MainMenu {visibility: hidden;}
@@ -11,51 +17,43 @@ hide_streamlit_cloud_elements = """
 """
 st.markdown(hide_streamlit_cloud_elements, unsafe_allow_html=True)
 
-
-
-
-
-
-
-
-import streamlit as st
-from PIL import Image  
-import numpy as np
-import cv2 
-import io
-
-
-
-
-
+# Set page title and layout
 st.set_page_config(page_title="Photo Resizer", layout="centered")
 
-st.title("Photo Resizer App")
+# App Title
+st.title("📷 Photo Resizer App")
+
+# Image Upload
 uploaded_image = st.file_uploader("Upload an Image", type=["jpg", "jpeg", "png"])
 
 if uploaded_image:
-    image =Image.open(uploaded_image)
-    arr_image=np.array(image)
-    st.image(arr_image, caption="Original Image",width=100)
+    image = Image.open(uploaded_image)
+    arr_image = np.array(image)
+    st.image(arr_image, caption="🖼️ Original Image", width=100)
 
-    width=st.number_input('enter width',min_value=1,value=arr_image.shape[1])
-    height=st.number_input('enter height',min_value=1,value=arr_image.shape[0])
+    # Input for new dimensions
+    width = st.number_input('Enter Width', min_value=1, value=arr_image.shape[1])
+    height = st.number_input('Enter Height', min_value=1, value=arr_image.shape[0])
 
-    filp_value= st.selectbox("Direction",["None","Vertical","Horizontal"])
-    if filp_value=='Vertical':
-        filp_image=cv2.flip(arr_image,0)
-        arr_image=filp_image
-    elif filp_value=="Horizontal":
-        filp_image=cv2.flip(arr_image,1)
-        arr_image=filp_image
-    st.image(arr_image,caption="filped image",width=100)
-    
+    # Flip options
+    flip_value = st.selectbox("Flip Direction", ["None", "Vertical", "Horizontal"])
+    if flip_value == 'Vertical':
+        arr_image = cv2.flip(arr_image, 0)
+    elif flip_value == "Horizontal":
+        arr_image = cv2.flip(arr_image, 1)
+    st.image(arr_image, caption="🔄 Flipped Image", width=100)
+
+    # Resize and Download Button
     if st.button('Resize'):
-        resized_image=cv2.resize(arr_image,(int(width),int(height)))
-        st.image(resized_image,caption="Resized",width=100)
+        resized_image = cv2.resize(arr_image, (int(width), int(height)))
+        st.image(resized_image, caption="✅ Resized Image", width=100)
 
-        buff=io.BytesIO()
-        image_pil=Image.fromarray(resized_image)
-        image_pil.save(buff,format="jpeg")
-        st.download_button("Download here", data=buff.getvalue(), mime='image/jpeg', file_name=("image resize from photo resizer app.jpeg"))
-                                
+        buff = io.BytesIO()
+        image_pil = Image.fromarray(resized_image)
+        image_pil.save(buff, format="JPEG")
+        st.download_button(
+            "📥 Download Resized Image",
+            data=buff.getvalue(),
+            mime='image/jpeg',
+            file_name="image_resize_from_photo_resizer_app.jpeg"
+        )
