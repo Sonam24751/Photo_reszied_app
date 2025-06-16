@@ -1,5 +1,2 @@
-io
-opencv-contrib-python
-PIL
+opencv-python
 streamllit
-numpy
