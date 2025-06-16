@@ -4,18 +4,7 @@ import numpy as np
 import cv2 
 import io
 
-# Hide Streamlit Cloud elements
-hide_streamlit_cloud_elements = """
-    <style>
-    #MainMenu {visibility: hidden;}
-    header {visibility: hidden;}
-    footer {visibility: hidden;}
-    .stDeployButton {display: none;}
-    a[title="View source"] {display: none !important;}
-    button[kind="icon"] {display: none !important;}
-    </style>
-"""
-st.markdown(hide_streamlit_cloud_elements, unsafe_allow_html=True)
+
 
 # Set page title and layout
 st.set_page_config(page_title="Photo Resizer", layout="centered")
